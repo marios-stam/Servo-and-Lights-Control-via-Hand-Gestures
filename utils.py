@@ -16,17 +16,18 @@ def getDistance(p1,p2):
     d=math.sqrt(dx**2+dy**2)
     return d
 
-def drawTextToImage(image,text,origin=(20,30),color = (255, 0, 255)):
+def drawTextToImage(image,text,origin=(20,30),color = (255, 0, 0)):
     # font 
-    font = cv2.FONT_HERSHEY_COMPLEX_SMALL 
-
+    #font = cv2.FONT_HERSHEY_COMPLEX_SMALL 
+    font = cv2.FONT_
+    
     org=origin
     # fontScale 
     fontScale = 1
     # convert RGB to BGR 
     color= color[::-1]
     # Line thickness of 2 px 
-    thickness = 2
+    thickness = 1
     # Using cv2.putText() method 
     image = cv2.putText(image, text, org, font,  
                        fontScale, color, thickness, cv2.LINE_AA) 

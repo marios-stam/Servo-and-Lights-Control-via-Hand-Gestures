@@ -4,7 +4,7 @@ from utils import *
 import socket
 from time import time
 
-FIST_DETECTED_COLOR=(255,0,0)
+FIST_DETECTED_COLOR=(0,255,0)
 LEFT_ORIGIN_X=20
 RIGHT_ORIGIN_X=450
 
@@ -93,21 +93,29 @@ with mp_hands.Hands(
      
     
       if len(results.multi_hand_landmarks)>1:
-        txt="angle: %d" % (angles[1] )
+
+        if(points[0][12].x>points[1][12].x):
+          RIGHT_INDEX=0
+          LEFT_INDEX=1
+        else:
+          RIGHT_INDEX=1
+          LEFT_INDEX=0
+        
+        txt="angle: %d" % (angles[LEFT_INDEX] )
         image=drawTextToImage(image,txt,origin=(LEFT_ORIGIN_X,25))
-        txt="distance: %d" % (distances[1])
+        txt="distance: %d" % (distances[LEFT_INDEX])
         image=drawTextToImage(image,txt,origin=(LEFT_ORIGIN_X,45))
       
-        txt="angle: %d" % (angles[0] )
+        txt="angle: %d" % (angles[RIGHT_INDEX] )
         image=drawTextToImage(image,txt,origin=(RIGHT_ORIGIN_X,25))
-        txt="distance: %d" % (distances[0])
+        txt="distance: %d" % (distances[RIGHT_INDEX])
         image=drawTextToImage(image,txt,origin=(RIGHT_ORIGIN_X,45))
         
-        if (fistsDetected[0]):
+        if (fistsDetected[RIGHT_INDEX]):
           txt="FIST DETECTED"
           image=drawTextToImage(image,txt,origin=(RIGHT_ORIGIN_X,70),color=FIST_DETECTED_COLOR )
 
-        if (fistsDetected[1]):
+        if (fistsDetected[LEFT_INDEX]):
           txt="FIST DETECTED"
           image=drawTextToImage(image,txt,origin=(LEFT_ORIGIN_X,70),color=FIST_DETECTED_COLOR )
       else:
@@ -119,13 +127,15 @@ with mp_hands.Hands(
         if (fistsDetected[0]):
           txt="FIST DETECTED"
           image=drawTextToImage(image,txt,origin=(LEFT_ORIGIN_X,70),color=FIST_DETECTED_COLOR )
-
+    
     if (time()-t>TIME_INTERVAL):
       if (len(angles)>0 ):
+        should_continue = 1 if len(angles)>1 else 0
+        
         angle=int(angles[0])
         angle=limit(angle,0,180)
         light=fistsDetected[0]
-        should_continue = 1 if len(angles)>1 else 0
+        
 
         txt=str(angle)
         if len(txt)<3:
@@ -163,6 +173,7 @@ with mp_hands.Hands(
           conn.sendall(txt)
           
       t=time()
+    
         
     cv2.imshow('MediaPipe Hands', image)
     if cv2.waitKey(5) & 0xFF == 27:
