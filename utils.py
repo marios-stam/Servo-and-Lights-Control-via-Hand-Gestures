@@ -16,7 +16,7 @@ def getDistance(p1,p2):
     d=math.sqrt(dx**2+dy**2)
     return d
 
-def drawTextToImage(image,text,origin=(20,30),color = (0, 0, 255)):
+def drawTextToImage(image,text,origin=(20,30),color = (255, 0, 255)):
     # font 
     font = cv2.FONT_HERSHEY_COMPLEX_SMALL 
 
@@ -53,6 +53,9 @@ def convertPointCoordsToImagePlane(image,point):
     
     return x*width,y*height 
 
+def limit(x,xmin,xmax):
+    return min(xmax,max(x,xmin))
+
 def fistDetected(points):
     if len(points)<15:
         return False
@@ -60,5 +63,5 @@ def fistDetected(points):
     p2=points[12]
 
     d=getDistance(p1,p2)
-    print(d,(d<FIST_DISTANCE_THRESHOLD))
+    
     return (d<FIST_DISTANCE_THRESHOLD)
