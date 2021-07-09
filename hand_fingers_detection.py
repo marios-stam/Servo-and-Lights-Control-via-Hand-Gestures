@@ -10,7 +10,7 @@ RIGHT_ORIGIN_X=450
 
 POINT_START_INDEX=0
 POINT_REF_INDEX=12
-
+#"""
 #connection with Labview VI set up
 TIME_INTERVAL=0.2
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -19,7 +19,7 @@ server.listen(1)
 conn, addr = server.accept()
 x=conn.recv(9)
 print(x)
-
+#"""
 #Media Pipe set up
 mp_drawing = mp.solutions.drawing_utils
 mp_hands = mp.solutions.hands
@@ -85,7 +85,7 @@ with mp_hands.Hands(
         # image=drawPointToImage(image,points[0])
         # image=drawPointToImage(image,points[12])
 
-        # txt="%.0f , %.0f" % (points[0].x,points[0].y )
+        # txt="%.0f , %.0f" % (points[0].x,points[0].y )  
         # image=drawTextToImage(image,txt )
         # txt="%.0f , %.0f" % (points[12].x,points[12].y )
         # image=drawTextToImage(image,txt,origin=(20,60) )
@@ -127,7 +127,7 @@ with mp_hands.Hands(
         if (fistsDetected[0]):
           txt="FIST DETECTED"
           image=drawTextToImage(image,txt,origin=(LEFT_ORIGIN_X,70),color=FIST_DETECTED_COLOR )
-    
+    #"""
     if (time()-t>TIME_INTERVAL):
       if (len(angles)>0 ):
         should_continue = 1 if len(angles)>1 else 0
@@ -173,7 +173,7 @@ with mp_hands.Hands(
           conn.sendall(txt)
           
       t=time()
-    
+    #"""
         
     cv2.imshow('MediaPipe Hands', image)
     if cv2.waitKey(5) & 0xFF == 27:

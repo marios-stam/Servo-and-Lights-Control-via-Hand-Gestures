@@ -7,7 +7,7 @@ def getAngle(p1,p2):
   dx=p1.x-p2.x
   dy=p1.y-p2.y
   
-  angle=math.atan2(dx,dy)
+  angle=math.atan2(-dx,dy)
   return  math.degrees(angle)
 
 def getDistance(p1,p2):
@@ -18,12 +18,10 @@ def getDistance(p1,p2):
 
 def drawTextToImage(image,text,origin=(20,30),color = (255, 0, 0)):
     # font 
-    #font = cv2.FONT_HERSHEY_COMPLEX_SMALL 
-    font = cv2.FONT_
-    
+    font = cv2.FONT_HERSHEY_COMPLEX_SMALL 
     org=origin
     # fontScale 
-    fontScale = 1
+    fontScale = 2
     # convert RGB to BGR 
     color= color[::-1]
     # Line thickness of 2 px 
